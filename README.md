@@ -1,8 +1,19 @@
-# carb6661 · Full-stack project portfolio
+# carb6661 · Cybersecurity portfolio
 
-我持续把想法做成可运行、可部署、可维护的项目：从产品界面和交互，到 API、数据流、自动化验证与安全边界。
+面向网络安全岗位建设的开源作品集，关注 **应用安全、DevSecOps 与 AI/RAG 安全**。以全栈开发作为实践基础，将安全分析落实到 API、数据流、自动化验证与部署边界。
 
-## Featured builds
+## 安全能力与证据
+
+| 项目 | 可展示能力 | 当前边界 |
+| --- | --- | --- |
+| [RAGShield](https://github.com/carb6661/ragshield) | 威胁建模、租户隔离评测、受限 HTTP 目标、SARIF 与 CI | 确定性场景评测，不能证明真实攻击覆盖完整 |
+| [Local Secret Scanner](https://github.com/carb6661/local-secret-scanner) | 代码检查、规则匹配、输出脱敏与 CI 退出码 | 教学原型；规则有限，有误报和漏报 |
+| [HTTP Security Headers Auditor](https://github.com/carb6661/http-security-headers-auditor) | HTTP 配置检查、风险解释与修复建议 | 离线基础检查，尚未完整验证策略语义 |
+| [File Integrity Monitor](https://github.com/carb6661/file-integrity-monitor) | SHA-256 基线、文件变更识别 | 基线需要额外保护 |
+
+审阅入口：[安全项目演示与核验](docs/SECURITY_PORTFOLIO.md) · [建设路线与验收标准](docs/ROADMAP.md)
+
+## 全栈工程基础
 
 | 项目 | 技术与亮点 |
 | --- | --- |
