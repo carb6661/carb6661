@@ -6,6 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
+| [Prompt Injection Firewall](https://github.com/carb6661/prompt-injection-firewall) | FastAPI 策略网关、RAG 筛选、来源隔离、临时封禁与审计仪表盘 | 可解释规则原型；未接入模型，仍有语义绕过与误报 |
 | [RAGShield](https://github.com/carb6661/ragshield) | 威胁建模、租户隔离评测、受限 HTTP 目标、SARIF 与 CI | 确定性场景评测，不能证明真实攻击覆盖完整 |
 | [Local Secret Scanner](https://github.com/carb6661/local-secret-scanner) | 代码检查、规则匹配、输出脱敏与 CI 退出码 | 教学原型；规则有限，有误报和漏报 |
 | [HTTP Security Headers Auditor](https://github.com/carb6661/http-security-headers-auditor) | HTTP 配置检查、风险解释与修复建议 | 离线基础检查，尚未完整验证策略语义 |
