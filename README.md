@@ -1,11 +1,12 @@
 # carb6661 · Cybersecurity portfolio
 
-面向网络安全岗位建设的开源作品集，关注 **应用安全、DevSecOps 与 AI/RAG 安全**。以全栈开发作为实践基础，将安全分析落实到 API、数据流、自动化验证与部署边界。
+面向网络安全岗位建设的开源作品集，关注 **应用安全、DevSecOps、SOC 日志分析与 AI/RAG 安全**。以全栈开发作为实践基础，将安全分析落实到 API、数据流、自动化验证与部署边界。
 
 ## 安全能力与证据
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
+| [Auth Log Triage](https://github.com/carb6661/auth-log-triage) | 认证日志规范化、时间窗口规则、事件时间线、精确证据、调查手册与 CI；[验证记录](https://github.com/carb6661/auth-log-triage/blob/main/docs/VALIDATION.md) | 合成离线实验；明确保留 NAT 误报与分布式漏报，不证明账号失陷 |
 | [Prompt Injection Firewall](https://github.com/carb6661/prompt-injection-firewall) | FastAPI 策略网关、RAG 筛选、来源隔离、临时封禁与审计仪表盘 | 可解释规则原型；未接入模型，仍有语义绕过与误报 |
 | [RAGShield](https://github.com/carb6661/ragshield) | 威胁建模、租户隔离评测、受限 HTTP 目标、SARIF 与 CI | 确定性场景评测，不能证明真实攻击覆盖完整 |
 | [Local Secret Scanner](https://github.com/carb6661/local-secret-scanner) | 代码检查、规则匹配、输出脱敏与 CI 退出码 | 教学原型；规则有限，有误报和漏报 |
