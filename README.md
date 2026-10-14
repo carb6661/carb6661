@@ -6,6 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
+| [Compliance RAG Assistant](https://github.com/carb6661/compliance-rag-assistant) | 合规知识入库、标题层级与元数据作用域、精确源码引用、严格导出、本地 FastAPI；[验证记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/VALIDATION.md) | 第一阶段；仅合成标准样本，尚未实现向量问答或真实测评，不出具合规结论 |
 | [Auth Log Triage](https://github.com/carb6661/auth-log-triage) | 认证日志规范化、时间窗口规则、事件时间线、精确证据、调查手册与 CI；[验证记录](https://github.com/carb6661/auth-log-triage/blob/main/docs/VALIDATION.md) | 合成离线实验；明确保留 NAT 误报与分布式漏报，不证明账号失陷 |
 | [Prompt Injection Firewall](https://github.com/carb6661/prompt-injection-firewall) | FastAPI 策略网关、RAG 筛选、来源隔离、临时封禁与审计仪表盘 | 可解释规则原型；未接入模型，仍有语义绕过与误报 |
 | [RAGShield](https://github.com/carb6661/ragshield) | 威胁建模、租户隔离评测、受限 HTTP 目标、SARIF 与 CI | 确定性场景评测，不能证明真实攻击覆盖完整 |

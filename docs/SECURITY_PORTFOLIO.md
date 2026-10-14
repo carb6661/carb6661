@@ -2,6 +2,24 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## Compliance RAG Assistant：可溯源的合规知识入库
+
+[仓库](https://github.com/carb6661/compliance-rag-assistant) · [测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_ingestion.py) · [预期Document](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/expected/documents.jsonl) · [验证记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/VALIDATION.md)
+
+按仓库说明安装 requirements.lock 后，从仓库根目录运行：
+
+```bash
+python -X utf8 -m compliance_rag parse examples/standards --out output/demo.jsonl
+python examples/filter_chunks.py output/demo.jsonl --level 第三级 --security-class 安全物理环境
+python -X utf8 -m pytest -q
+```
+
+合成样例导出6个块；过滤第三级/安全物理环境得到1个块。缺少安全类的原始样本严格拒绝，补结构后导出2块。Windows/Python 3.12.8 本地59项测试通过；实际回环HTTP有效请求200/6块，不完整请求422/零导出。[首次发布CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/38591066146)的 Windows/Linux × Python 3.11/3.12/3.13 六组检查全部通过，对应提交 d4be3d3。
+
+可讨论：标题栈、级别与类别作用域、源码区间和摘要、标准版本配置、原子块保留、不完整入库门禁、API不接收路径/URL的边界。源码摘要不证明来源真实；标题正确不代表内容正确；文档中的指令不执行，但本模块不是提示词注入防火墙。
+
+这是第一阶段数据准备，没有嵌入模型、向量问答、真实标准全文覆盖或合规判定，也没有企业测评经历与生产性能承诺。
+
 ## Auth Log Triage：SOC 认证日志与证据分诊
 
 [仓库](https://github.com/carb6661/auth-log-triage) · [实际示例报告](https://github.com/carb6661/auth-log-triage/blob/main/examples/report-attack.json) · [规则测试](https://github.com/carb6661/auth-log-triage/blob/main/tests/test_authwatch.py) · [验证记录](https://github.com/carb6661/auth-log-triage/blob/main/docs/VALIDATION.md)
