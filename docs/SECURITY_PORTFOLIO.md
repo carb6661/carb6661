@@ -2,6 +2,26 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## RAG Document Authorization Lab：对象权限与租户隔离
+
+[仓库](https://github.com/carb6661/rag-document-authz-lab) · [修复前后报告](https://github.com/carb6661/rag-document-authz-lab/blob/main/examples/report.json) · [矩阵与API测试](https://github.com/carb6661/rag-document-authz-lab/blob/main/tests/test_lab.py) · [威胁模型](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/THREAT_MODEL.md)
+
+安装仓库 requirements.lock 后运行：
+
+```bash
+python -X utf8 -m doclab experiment
+python -X utf8 -m pytest -q
+python -X utf8 -m doclab.live_smoke
+```
+
+13组对照共26次固定请求，展示同租户他人访问、跨租户同名用户和管理员跨租户的授权差异；越权修改在修复版被拒且数据不变，列表4项→1项。Windows/Python 3.12.8 本地114项测试通过，实际回环HTTP验证自身读取200、他人/跨租户404、匿名401及列表1项。
+
+[首次发布CI](https://github.com/carb6661/rag-document-authz-lab/actions/runs/38735835633)在 Windows/Linux × Python 3.11/3.12/3.13 六组环境全部通过，包含测试、对照实验和真实回环HTTP；对应提交5408e89。发布前扫描的3项疑似凭据经逐项审查为运行时变量赋值，具体记录见该仓库验证说明，不把扫描描述为零匹配。
+
+可讨论认证与对象授权的区别、可信身份来源、角色×对象×动作矩阵、列表一致性、受保护字段拒绝、锁内版本检查、审计不记录令牌/正文，以及统一404不等于消除时间侧信道。
+
+只使用合成内存数据；短期会话不是生产IdP，无持久化/共享授权/真实RAG检索或性能承诺。缺陷版仅进程内对照，不开放外部目标或删除功能。接入真实向量库后需重新验证授权，不把本实验通过当作下游无泄漏证明。
+
 ## Compliance RAG Assistant：可溯源的合规知识入库
 
 [仓库](https://github.com/carb6661/compliance-rag-assistant) · [测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_ingestion.py) · [预期Document](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/expected/documents.jsonl) · [验证记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/VALIDATION.md)
