@@ -15,7 +15,7 @@
 ## 独立项目方向与进度
 
 1. SOC 日志分析：已发布 [Auth Log Triage](https://github.com/carb6661/auth-log-triage)，提供三条认证规则、合成样本、事件时间线、证据、36 项本地测试及误报/漏报实验。仅完成离线教学首版，后续可补授权格式适配与跨文件状态；不再重复新建同类阈值检测仓库。
-2. 安全 API 实验：已发布 [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab)，实现短期本地会话、租户/所有权/角色授权、列表过滤、并发版本与审计；13组修复前后对照及114项本地测试。未接入生产IdP/数据库/真实RAG，不再重复创建同类BOLA实验。
+2. 安全 API 实验：已发布 [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab)。0.2版增加严格JSON/关键头、有界请求、故障审计、会话容量与主体撤销、授权后关键词检索；16组对照、164项本地测试及五项旧版复现证据。下一阶段需选择真实身份/持久库并定义处理中撤销语义；未接入生产IdP/数据库/向量RAG，不另建重复BOLA实验。
 3. 事件响应时间线：分析本地合成事件，解释时间戳、证据可信性和处置记录。
 4. 安全配置审查：审查本地配置中的权限与危险选项，给出修复差异和回归验证。
 
