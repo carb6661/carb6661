@@ -2,6 +2,25 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## Workflow Trust Auditor：DevSecOps与CI信任边界
+
+[仓库](https://github.com/carb6661/workflow-trust-auditor) · [修正前报告](https://github.com/carb6661/workflow-trust-auditor/blob/main/examples/report-before.json) · [修正后报告](https://github.com/carb6661/workflow-trust-auditor/blob/main/examples/report-after.json) · [测试](https://github.com/carb6661/workflow-trust-auditor/blob/main/tests/test_workflowguard.py) · [威胁模型](https://github.com/carb6661/workflow-trust-auditor/blob/main/docs/THREAT_MODEL.md)
+
+安装requirements.lock后，从仓库根目录运行：
+
+```bash
+python -X utf8 -m workflowguard examples/before.workflow --format json --fail-on none
+python -X utf8 -m workflowguard examples/after.workflow --format json
+python -X utf8 -m workflowguard . --format json
+python -X utf8 -m unittest discover -s tests -v
+```
+
+Windows/Python3.12.8实际43项测试通过。原创合成配置6项发现→修正后0匹配，报告精确重放；共7条规则，缺失权限声明由另一个测试验证。位置包含文件、job、行号、结构路径与输入摘要，不回显脚本原文；坏批次不输出部分报告。审查本身不联网、不执行工作流、不修改输入，依赖安装需要网络。
+
+[首次发布CI](https://github.com/carb6661/workflow-trust-auditor/actions/runs/39035514199)在Windows/Linux × Python3.11/3.12/3.13六组环境全部通过，包含43项测试、依赖检查及自身工作流/修正后样本审查；对应提交7a64230。
+
+可讨论顶层/job权限覆盖、令牌最小权限、PR到特权checkout/runner边界、直接依赖SHA固定、有界YAML事件/节点、CI退出码和敏感输出最小化。明确展示if:false仍命中的保守误报，以及下标表达式未识别的漏报；不是完整表达式污点引擎、GitHub schema、lockfile/传递依赖审计或执行利用证明。新版checkout保护可能实际阻断风险配置；0匹配不是安全证书。
+
 ## RAG Document Authorization Lab：对象权限与租户隔离
 
 [仓库](https://github.com/carb6661/rag-document-authz-lab) · [修复前后报告](https://github.com/carb6661/rag-document-authz-lab/blob/main/examples/report.json) · [矩阵与API测试](https://github.com/carb6661/rag-document-authz-lab/blob/main/tests/test_lab.py) · [威胁模型](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/THREAT_MODEL.md)
