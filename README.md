@@ -6,7 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
-| [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab) | 多租户对象授权、先授权后关键词评分、严格输入、故障审计、16组对照；[技术深挖](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/TECHNICAL_DEEP_DIVE.md) | 合成内存API；未接生产IdP/数据库/向量RAG，处理中撤销有快照窗口 |
+| [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab) | 多租户授权、授权后评分、发布前会话/权限/版本复核、提交审计、200项测试；[竞态修正](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/REVOCATION_CHECKPOINTS.md) | 单进程合成API；最终检查后仍有发送窗口，无生产IdP/数据库/向量RAG |
 | [Compliance RAG Assistant](https://github.com/carb6661/compliance-rag-assistant) | 合规知识入库、标题层级与元数据作用域、精确源码引用、严格导出、本地 FastAPI；[验证记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/VALIDATION.md) | 第一阶段；仅合成标准样本，尚未实现向量问答或真实测评，不出具合规结论 |
 | [Auth Log Triage](https://github.com/carb6661/auth-log-triage) | 认证日志规范化、时间窗口规则、事件时间线、精确证据、调查手册与 CI；[验证记录](https://github.com/carb6661/auth-log-triage/blob/main/docs/VALIDATION.md) | 合成离线实验；明确保留 NAT 误报与分布式漏报，不证明账号失陷 |
 | [Prompt Injection Firewall](https://github.com/carb6661/prompt-injection-firewall) | FastAPI 策略网关、RAG 筛选、来源隔离、临时封禁与审计仪表盘 | 可解释规则原型；未接入模型，仍有语义绕过与误报 |

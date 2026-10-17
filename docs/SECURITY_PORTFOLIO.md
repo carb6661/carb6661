@@ -12,17 +12,22 @@
 python -X utf8 -m doclab experiment
 python -X utf8 -m pytest -q
 python -X utf8 -m doclab.live_smoke
+python -X utf8 -m doclab.race_diagnostics
 ```
 
-0.2版16组对照共32次固定请求，保留原有对象授权验证，并增加检索隔离。Windows/Python 3.12.8 本地164项测试通过；真实回环HTTP验证授权检索1项，仅出现在他人文档中的关键词返回0项。
+0.3版保留16组对照共32次固定请求；Windows/Python3.12.8 本地200项测试通过。真实回环HTTP除读取/列表/检索隔离，还验证评分中版本变化409、重新检索版本2成功、评分中撤销401且无原hits。
 
-[技术深挖](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/TECHNICAL_DEEP_DIVE.md)记录五项旧版问题的实际观察与修复：重复JSON/关键头、异常审计遗漏、空ASGI帧积累及过期会话清理。专项测试确认拒绝文档未进入评分函数，并显式演示处理中撤销的身份快照限制，不宣称实时撤回已发送数据。
+[0.3竞态修正报告](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/REVOCATION_CHECKPOINTS.md)记录四项修复前后证据：评分中撤销、版本变化、仅归属变化，以及认证后写入前撤销。方案为锁内写入会话检查及成功响应发布前会话/当前权限/版本复核，固定会话→文档锁顺序。新增36项回归，也明确验证提交后撤销可返回401但修改保留，审计mutation_committed区分副作用；最终检查后仍有发送窗口，不能撤回已发送数据。
+
+[0.2历史技术深挖](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/TECHNICAL_DEEP_DIVE.md)保留五项旧版问题：重复JSON/关键头、异常审计遗漏、空ASGI帧积累及过期会话清理。未授权对象不进入评分的回归保持；0.2评分中撤销仍200的旧限制已由0.3发布检查缩小，不再当作当前版本预期。
+
+[0.3版CI](https://github.com/carb6661/rag-document-authz-lab/actions/runs/39034667745)在 Windows/Linux × Python3.11/3.12/3.13 六组环境全部通过，包含200项测试、16组对照、依赖检查及真实回环HTTP竞态验证；对应提交5138e18。
 
 [0.2版CI](https://github.com/carb6661/rag-document-authz-lab/actions/runs/38830703117)在 Windows/Linux × Python 3.11/3.12/3.13 六组环境全部通过，包含164项测试、16组对照与真实回环HTTP；对应提交9632b64。
 
 [首次发布CI](https://github.com/carb6661/rag-document-authz-lab/actions/runs/38735835633)在 Windows/Linux × Python 3.11/3.12/3.13 六组环境全部通过，包含测试、对照实验和真实回环HTTP；对应提交5408e89。发布前扫描的3项疑似凭据经逐项审查为运行时变量赋值，具体记录见该仓库验证说明，不把扫描描述为零匹配。
 
-可讨论认证与对象授权的区别、可信身份来源、角色×对象×动作矩阵、列表一致性、受保护字段拒绝、锁内版本检查、审计不记录令牌/正文，以及统一404不等于消除时间侧信道。
+可讨论认证与对象授权的区别、可信身份来源、角色×对象×动作矩阵、列表一致性、受保护字段拒绝、锁内版本检查、认证/提交/发布时点、审计副作用语义，以及统一404不等于消除时间侧信道。审计不保存令牌、摘要或正文。
 
 只使用合成内存数据；关键词检索不等于语义RAG，短期会话不是生产IdP，无持久化/共享授权/生产性能承诺。缺陷版仅进程内对照，不开放外部目标或删除功能。接入真实向量库后需重新验证授权，不把本实验通过当作下游无泄漏证明。
 
