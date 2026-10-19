@@ -2,6 +2,26 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## Incident Timeline Lab：多源事件时间与证据解释
+
+[仓库](https://github.com/carb6661/incident-timeline-lab) · [未修正假设报告](https://github.com/carb6661/incident-timeline-lab/blob/main/examples/report-uncorrected.json) · [校准假设报告](https://github.com/carb6661/incident-timeline-lab/blob/main/examples/report-calibrated.json) · [测试](https://github.com/carb6661/incident-timeline-lab/blob/main/tests/test_incidenttime.py) · [调查手册](https://github.com/carb6661/incident-timeline-lab/blob/main/docs/ANALYST_RUNBOOK.md)
+
+Python3.11+，纯标准库，从仓库根目录运行：
+
+```bash
+python -X utf8 -m incidenttime examples/uncorrected --format json
+python -X utf8 -m incidenttime examples/calibrated --format json
+python -X utf8 -m unittest discover -s tests -v
+```
+
+Windows/Python3.12.8实际45项测试通过。两组原创合成案例各3来源、6事件、5项指定比较，原始JSONL摘要相同；终端修正−120秒后，一项关系从after变为不能判定，一项从after变为before，校准组仍有2项indeterminate。不是执行真实设备校时或处理真实入侵。
+
+[首次发布CI](https://github.com/carb6661/incident-timeline-lab/actions/runs/39268453568)在Windows/Linux × Python3.11/3.12/3.13六组环境全部通过，包含45项测试、依赖一致性检查和两组CLI重放；对应提交9fbaa94。
+
+可展示SOC/IR的时钟误差分析、UTC/显式偏移、闭区间比较、行级摘要与定位、严格输入、只读快照和整体失败语义。与Auth Log Triage的认证阈值告警不同，这里不检测攻击；与文件完整性监测不同，这里摘要绑定分析输入，不扫描文件变更。
+
+必须解释校时/误差是未自动核验的分析假设；显示排序不等于因果；相交连通组不等于所有成员两两重叠。摘要不证明真实性或法律证据链，规范化JSONL不能冒充原生EVTX/pcap保全。工具不联网、不执行日志，不上传真实个人/客户记录。
+
 ## Workflow Trust Auditor：DevSecOps与CI信任边界
 
 [仓库](https://github.com/carb6661/workflow-trust-auditor) · [修正前报告](https://github.com/carb6661/workflow-trust-auditor/blob/main/examples/report-before.json) · [修正后报告](https://github.com/carb6661/workflow-trust-auditor/blob/main/examples/report-after.json) · [测试](https://github.com/carb6661/workflow-trust-auditor/blob/main/tests/test_workflowguard.py) · [威胁模型](https://github.com/carb6661/workflow-trust-auditor/blob/main/docs/THREAT_MODEL.md)
