@@ -6,6 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
+| [Webhook Replay Lab](https://github.com/carb6661/webhook-replay-lab) | 原始字节HMAC认证、时间检查、持久事务幂等、并发/故障验证、78项测试；[验证记录](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/VALIDATION.md) | 原创本地协议与合成计数器；非供应商兼容实现，不保证外部exactly-once |
 | [Incident Timeline Lab](https://github.com/carb6661/incident-timeline-lab) | 多源UTC规范化、校时误差区间、行级证据、45项测试；[验证记录](https://github.com/carb6661/incident-timeline-lab/blob/main/docs/VALIDATION.md) | 校时假设未自动核验；时间先后不等于因果，无原生采集或证据链认证 |
 | [Workflow Trust Auditor](https://github.com/carb6661/workflow-trust-auditor) | CI权限覆盖、PR信任边界、直接依赖固定、脱敏定位、43项测试；[验证记录](https://github.com/carb6661/workflow-trust-auditor/blob/main/docs/VALIDATION.md) | 离线静态子集；不执行工作流、不验证远程源码，保留明确误报/漏报 |
 | [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab) | 多租户授权、授权后评分、发布前会话/权限/版本复核、提交审计、200项测试；[竞态修正](https://github.com/carb6661/rag-document-authz-lab/blob/main/docs/REVOCATION_CHECKPOINTS.md) | 单进程合成API；最终检查后仍有发送窗口，无生产IdP/数据库/向量RAG |

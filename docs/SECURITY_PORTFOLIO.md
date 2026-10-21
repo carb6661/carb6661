@@ -2,6 +2,26 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## Webhook Replay Lab：可信回调与事务幂等
+
+[仓库](https://github.com/carb6661/webhook-replay-lab) · [10情境报告](https://github.com/carb6661/webhook-replay-lab/blob/main/examples/report.json) · [测试](https://github.com/carb6661/webhook-replay-lab/blob/main/tests/test_webhooklab.py) · [威胁模型](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/THREAT_MODEL.md) · [故障与重试手册](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/OPERATIONS.md)
+
+安装requirements.lock后，从仓库根目录运行：
+
+```bash
+python -X utf8 -m webhooklab demo
+python -X utf8 -m webhooklab live-smoke
+python -X utf8 -m pytest -q
+```
+
+Windows/Python3.12.8实际78项测试通过。真实回环HTTP状态[201,200,401,409,401,201]，最终2个回执/计数器8；固定10情境另验证轮换、发送方命名空间及重新打开DB。20个相同并发请求只产生1次新增，20个独立事件不丢增量；测试覆盖两表间故障回滚、提交后异常与同ID重试恢复历史ACK。
+
+[首次发布CI](https://github.com/carb6661/webhook-replay-lab/actions/runs/39627078032)在Windows/Linux × Python3.11/3.12/3.13六组环境全部通过，包含78项测试、依赖检查、固定报告与真实回环HTTP；对应提交80492a7。
+
+可展示AppSec/API消息认证、raw body与元数据覆盖、时间窗口/提交检查、稳定发送方命名空间、SQLite原子幂等、最小审计与故障解释。HMAC覆盖key id/时间/事件ID，防止仅改未认证元数据绕过去重；回执与本地合成效果在同一事务，不把内存集合当持久幂等。
+
+WHLAB v1是原创本地教学协议，不兼容Stripe/GitHub，不处理真实付款或外部效果。HMAC不是加密或不可抵赖签名；HTTP500不证明未提交，审计null表示不能确认；重复ACK是历史结果，不是当前计数查询。无在线撤销、生产TLS/限流/持久审计或跨主机exactly-once，不包装成生产支付经验。
+
 ## Incident Timeline Lab：多源事件时间与证据解释
 
 [仓库](https://github.com/carb6661/incident-timeline-lab) · [未修正假设报告](https://github.com/carb6661/incident-timeline-lab/blob/main/examples/report-uncorrected.json) · [校准假设报告](https://github.com/carb6661/incident-timeline-lab/blob/main/examples/report-calibrated.json) · [测试](https://github.com/carb6661/incident-timeline-lab/blob/main/tests/test_incidenttime.py) · [调查手册](https://github.com/carb6661/incident-timeline-lab/blob/main/docs/ANALYST_RUNBOOK.md)

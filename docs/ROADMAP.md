@@ -18,6 +18,7 @@
 2. 安全 API 实验：已发布 [RAG Document Authorization Lab](https://github.com/carb6661/rag-document-authz-lab)。0.3在0.2严格输入/有界请求/故障审计/授权后检索之上，修正写入前撤销与旧快照发布，增加会话/当前ACL/版本复核及mutation_committed审计；16组对照、200项本地测试，四项竞态与五项输入/容量旧版证据。已定义单进程检查点和提交后响应失败语义，但最终发送窗口仍在。下一阶段需选择真实身份/持久库，补多实例撤销、幂等操作状态与持久审计；未接入生产IdP/数据库/向量RAG，不另建重复BOLA实验。
 3. 事件响应时间线：已发布 [Incident Timeline Lab](https://github.com/carb6661/incident-timeline-lab)，补多源UTC、时钟修正/误差闭区间、行级摘要证据与不能判定结论。45项本地测试；两组各3来源/6事件/5比较，保持来源字节相同，仅改变校时假设，2项关系变化且校准组保留2项indeterminate。只接受规范化JSONL，不采集原生证据、不检测攻击、不认证证据链，时序不是因果。后续在原仓库补格式适配、校时依据关联与更精细误差模型，不另建重复时间线排序器或认证阈值检测器。
 4. 安全配置审查：已发布 [Workflow Trust Auditor](https://github.com/carb6661/workflow-trust-auditor)，补足独立的DevSecOps/CI信任边界能力。7条规则、43项本地测试、合成配置6项发现→0匹配及精确证据重放；检查权限覆盖、直接依赖固定、PR/runner/脚本边界。仅离线静态子集，存在明确误报/漏报，不做执行利用，不替代lockfile/传递依赖审计；后续在原仓库补表达式AST、依赖关联和豁免理由，不另建重复工作流关键字扫描仓库。
+5. 可信回调与事务幂等：已发布 [Webhook Replay Lab](https://github.com/carb6661/webhook-replay-lab)，补原始字节HMAC、元数据/时间认证、稳定发送方去重、SQLite同事务回执与合成效果。78项本地测试、10情境证据和真实回环HTTP；验证并发、回滚、提交后异常与同ID恢复。原创协议非供应商SDK，无外部exactly-once或在线撤销；后续在同仓库补Outbox、受控生命周期及指标，不重复新建签名Webhook或SQLite幂等计数器实验。
 
 ## 后续项目发布标准
 
