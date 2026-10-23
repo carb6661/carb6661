@@ -2,6 +2,26 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+## Archive Ingest Guard：不可信归档与文件系统边界
+
+[仓库](https://github.com/carb6661/archive-ingest-guard) · [12情境证据](https://github.com/carb6661/archive-ingest-guard/blob/main/examples/expected.json) · [测试](https://github.com/carb6661/archive-ingest-guard/blob/main/tests/test_archiveguard.py) · [问题与最终方案](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/TECHNICAL_DEEP_DIVE.md) · [威胁模型](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/THREAT_MODEL.md)
+
+Python3.11–3.13、纯标准库，从仓库根目录运行：
+
+```bash
+python -S -X utf8 -m unittest discover -s tests -v
+python -S -X utf8 -m archiveguard demo
+python examples/make_bundle.py
+python -X utf8 -m archiveguard check output/synthetic.zip
+python -X utf8 -m archiveguard extract output/synthetic.zip output/new-private-container
+```
+
+Windows/Python3.12.8本地106项注册测试，105通过、1项真实符号链接创建因权限跳过；没有把跳过记为通过。[首次发布CI](https://github.com/carb6661/archive-ingest-guard/actions/runs/39974907963)对应eea141b，Windows/Linux × Python3.11/3.12/3.13六组均106项通过、无跳过，12情境全部重放；CI允许创建的真实目录symlink用例也通过。良性ZIP368字节，输出2文件/132字节。
+
+可展示AppSec/安全开发的不可信路径、NUL原名、设备/流/大小写前缀冲突、声明与实际解压预算、先校验再写、全新容器独占、私有暂存与payload发布、故障回滚和证据最小化。后续成员CRC失败时不发布首个文件；已有目录/文件与竞争创建者的marker保持原状；清理失败明确返回error而非宣称回滚。微型坏路径只检查元数据，不运行有漏洞基线、不写出隔离区外。
+
+明确只支持保守ASCII路径，中文正文可保留；高压缩率正常文本可能被拒绝。后缀不是内容验证：txt包裹ZIP的案例仍获准隔离，不阻止恶意Markdown/CSV/提示词。无HTTP上传、杀毒、强CPU/内存沙箱、抗恶意本地竞态或崩溃持久事务；尚未与Compliance RAG跨仓库集成，不冒充完整RAG系统。公开文件为原创代码与合成数据。
+
 ## Webhook Replay Lab：可信回调与事务幂等
 
 [仓库](https://github.com/carb6661/webhook-replay-lab) · [10情境报告](https://github.com/carb6661/webhook-replay-lab/blob/main/examples/report.json) · [测试](https://github.com/carb6661/webhook-replay-lab/blob/main/tests/test_webhooklab.py) · [威胁模型](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/THREAT_MODEL.md) · [故障与重试手册](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/OPERATIONS.md)

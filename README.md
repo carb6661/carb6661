@@ -6,6 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
+| [Archive Ingest Guard](https://github.com/carb6661/archive-ingest-guard) | ZIP接收边界、跨平台路径命名空间、观测字节预算、隔离发布与失败清理；[验证记录](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/VALIDATION.md) | 纯本地小型文档包；ASCII文件名，不审核内容，不是强资源沙箱或崩溃事务 |
 | [Webhook Replay Lab](https://github.com/carb6661/webhook-replay-lab) | 原始字节HMAC认证、时间检查、持久事务幂等、并发/故障验证、78项测试；[验证记录](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/VALIDATION.md) | 原创本地协议与合成计数器；非供应商兼容实现，不保证外部exactly-once |
 | [Incident Timeline Lab](https://github.com/carb6661/incident-timeline-lab) | 多源UTC规范化、校时误差区间、行级证据、45项测试；[验证记录](https://github.com/carb6661/incident-timeline-lab/blob/main/docs/VALIDATION.md) | 校时假设未自动核验；时间先后不等于因果，无原生采集或证据链认证 |
 | [Workflow Trust Auditor](https://github.com/carb6661/workflow-trust-auditor) | CI权限覆盖、PR信任边界、直接依赖固定、脱敏定位、43项测试；[验证记录](https://github.com/carb6661/workflow-trust-auditor/blob/main/docs/VALIDATION.md) | 离线静态子集；不执行工作流、不验证远程源码，保留明确误报/漏报 |

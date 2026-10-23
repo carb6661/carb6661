@@ -19,6 +19,7 @@
 3. 事件响应时间线：已发布 [Incident Timeline Lab](https://github.com/carb6661/incident-timeline-lab)，补多源UTC、时钟修正/误差闭区间、行级摘要证据与不能判定结论。45项本地测试；两组各3来源/6事件/5比较，保持来源字节相同，仅改变校时假设，2项关系变化且校准组保留2项indeterminate。只接受规范化JSONL，不采集原生证据、不检测攻击、不认证证据链，时序不是因果。后续在原仓库补格式适配、校时依据关联与更精细误差模型，不另建重复时间线排序器或认证阈值检测器。
 4. 安全配置审查：已发布 [Workflow Trust Auditor](https://github.com/carb6661/workflow-trust-auditor)，补足独立的DevSecOps/CI信任边界能力。7条规则、43项本地测试、合成配置6项发现→0匹配及精确证据重放；检查权限覆盖、直接依赖固定、PR/runner/脚本边界。仅离线静态子集，存在明确误报/漏报，不做执行利用，不替代lockfile/传递依赖审计；后续在原仓库补表达式AST、依赖关联和豁免理由，不另建重复工作流关键字扫描仓库。
 5. 可信回调与事务幂等：已发布 [Webhook Replay Lab](https://github.com/carb6661/webhook-replay-lab)，补原始字节HMAC、元数据/时间认证、稳定发送方去重、SQLite同事务回执与合成效果。78项本地测试、10情境证据和真实回环HTTP；验证并发、回滚、提交后异常与同ID恢复。原创协议非供应商SDK，无外部exactly-once或在线撤销；后续在同仓库补Outbox、受控生命周期及指标，不重复新建签名Webhook或SQLite幂等计数器实验。
+6. 归档接收与文件系统边界：已发布 [Archive Ingest Guard](https://github.com/carb6661/archive-ingest-guard)，补跨平台保守路径/前缀命名空间、声明与观测解压预算、全新容器独占、私有暂存与payload发布。106项本地注册测试（105通过/1项因本机权限跳过）；六组CI各106通过无跳过，12情境和良性2文件/132字节输出。仅纯本地小型ZIP隔离接收，不审核文件内容，不保证硬资源沙箱、恶意本地竞态或崩溃事务；尚未接入RAG。后续在原仓库补独立worker配额、格式策略及崩溃恢复，并在Compliance RAG原仓库做受控集成，不重复新建Zip Slip/压缩率关键词检查器。
 
 ## 后续项目发布标准
 
