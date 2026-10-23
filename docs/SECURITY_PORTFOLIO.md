@@ -120,6 +120,8 @@ python -X utf8 -m doclab.race_diagnostics
 
 Windows/Python3.12.8本地131项测试通过。真实BGE在禁止出站socket/DNS下运行20问与token超限拒绝；12块合成开发集16可回答题，Dense Hit@3=16/16、MRR@3=1；BM25/Hybrid MRR@3均0.96875，没有宣称混合检索更好。4不可回答题仅拒3个，相关但缺事实案例保留；原文精确不等于语义正确。
 
+[0.2 CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/39980575362)对应757c806，Windows/Linux × Python3.11/3.12/3.13六组全部成功，包含131项基础测试、离线评测和真实回环HTTP。CI不下载BGE权重、不调用真实生成服务，不能与本地真实向量验证混淆。
+
 真实生成服务尚未配置联调，Mock只证明契约/错误分支，不代表某模型的生成效果；没有正式标准覆盖、合规判定、生产性能或企业实战承诺。源码/分词器token门禁和模型摘要绑定索引，精确扫描上限2000块不是ANN。最后revision复核到实际发送仍有窗口。
 
 以下保留0.1数据准备的历史证据；不再代表0.2尚无向量能力。
