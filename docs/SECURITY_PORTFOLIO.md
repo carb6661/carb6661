@@ -2,6 +2,8 @@
 
 以下项目是公开工程实践，不作为商业项目经验或真实事件处置经历。命令从相应项目目录执行，安装依赖以各仓库 README 为准。
 
+当前深入建设的主项目是 [Compliance RAG Assistant](https://github.com/carb6661/compliance-rag-assistant)，优先展示真实业务闭环、实验反例与[设计复盘/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)，而不是用仓库数量替代能力证据。
+
 ## Archive Ingest Guard：不可信归档与文件系统边界
 
 [仓库](https://github.com/carb6661/archive-ingest-guard) · [12情境证据](https://github.com/carb6661/archive-ingest-guard/blob/main/examples/expected.json) · [测试](https://github.com/carb6661/archive-ingest-guard/blob/main/tests/test_archiveguard.py) · [问题与最终方案](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/TECHNICAL_DEEP_DIVE.md) · [威胁模型](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/THREAT_MODEL.md)
@@ -110,7 +112,17 @@ python -X utf8 -m doclab.race_diagnostics
 
 只使用合成内存数据；关键词检索不等于语义RAG，短期会话不是生产IdP，无持久化/共享授权/生产性能承诺。缺陷版仅进程内对照，不开放外部目标或删除功能。接入真实向量库后需重新验证授权，不把本实验通过当作下游无泄漏证明。
 
-## Compliance RAG Assistant：可溯源的合规知识入库
+## Compliance RAG Assistant：可持久更新的合规证据问答
+
+0.2在原仓库深入，而非另建切分演示。[业务运行/模型配置](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/RAG_GUIDE.md) · [背景、设计、难题和简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md) · [真实向量前后报告](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/semantic-after.json) · [新回归测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_rag.py)
+
+补SQLite事务来源/块/向量替换与级联删除、mandatory标准/版本/级别SQL过滤、BM25/本地512维BGE/精确余弦/RRF、模型原文选摘验证、生成后revision复核及最多1000条不含正文的trace。兼容模型的URL/名称/Key只从服务端配置，出站需显式许可；有真实HTTP业务演示，无用户/租户鉴权，只能私有回环运行。
+
+Windows/Python3.12.8本地131项测试通过。真实BGE在禁止出站socket/DNS下运行20问与token超限拒绝；12块合成开发集16可回答题，Dense Hit@3=16/16、MRR@3=1；BM25/Hybrid MRR@3均0.96875，没有宣称混合检索更好。4不可回答题仅拒3个，相关但缺事实案例保留；原文精确不等于语义正确。
+
+真实生成服务尚未配置联调，Mock只证明契约/错误分支，不代表某模型的生成效果；没有正式标准覆盖、合规判定、生产性能或企业实战承诺。源码/分词器token门禁和模型摘要绑定索引，精确扫描上限2000块不是ANN。最后revision复核到实际发送仍有窗口。
+
+以下保留0.1数据准备的历史证据；不再代表0.2尚无向量能力。
 
 [仓库](https://github.com/carb6661/compliance-rag-assistant) · [测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_ingestion.py) · [预期Document](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/expected/documents.jsonl) · [验证记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/VALIDATION.md)
 
@@ -126,7 +138,7 @@ python -X utf8 -m pytest -q
 
 可讨论：标题栈、级别与类别作用域、源码区间和摘要、标准版本配置、原子块保留、不完整入库门禁、API不接收路径/URL的边界。源码摘要不证明来源真实；标题正确不代表内容正确；文档中的指令不执行，但本模块不是提示词注入防火墙。
 
-这是第一阶段数据准备，没有嵌入模型、向量问答、真实标准全文覆盖或合规判定，也没有企业测评经历与生产性能承诺。
+0.1仅数据准备；0.2新增的能力和未完成事项见上方。两版均无真实标准全文覆盖或合规判定，也没有企业测评经历与生产性能承诺。
 
 ## Auth Log Triage：SOC 认证日志与证据分诊
 
