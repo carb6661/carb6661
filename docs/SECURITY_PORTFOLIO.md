@@ -114,6 +114,14 @@ python -X utf8 -m doclab.race_diagnostics
 
 ## Compliance RAG Assistant：可持久更新的合规证据问答
 
+0.3继续同一主项目的知识维护：[条件写设计/升级说明](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/CONDITIONAL_WRITES.md) · [实际合成证据](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/conditional-writes.json) · [专项测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_source_conditions.py)。
+
+补来源读取和ETag、create-only、来源generation与库身份；向量计算前廉价检查后，在SQLite IMMEDIATE事务内再次比较才写/删，防旧草稿覆盖、旧标签误删及内容/删除重建两类ABA。167项本地测试；8连接1提交/7冲突，真实4个CLI进程1成功/3冲突；回环HTTP428/200/412/412。独立schema1夹具升级保留12个原块，故障回滚列与settings。引用新增查询读到的source_etag，不混淆全局revision与来源状态。
+
+[0.3 CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/40202875801)对应b0a5784，Windows/Linux × Python3.11/3.12/3.13六组各167项通过，含真实回环HTTP及条件写重放；模型权重只在本机独立验证，不把CI写成六平台真实LLM实测。
+
+ETag不是授权，仍仅私有本地单用户；不能防直接SQL、旧写者混跑或恶意本机改库。升级前需停止旧进程并备份，不能在412后自动刷新标签覆盖。不是历史版本仓库/审批/分布式一致性，也没有改变最终发送窗口或3/4拒答缺口；没有把Mock写成真实LLM联调。
+
 0.2在原仓库深入，而非另建切分演示。[业务运行/模型配置](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/RAG_GUIDE.md) · [背景、设计、难题和简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md) · [真实向量前后报告](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/semantic-after.json) · [新回归测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_rag.py)
 
 补SQLite事务来源/块/向量替换与级联删除、mandatory标准/版本/级别SQL过滤、BM25/本地512维BGE/精确余弦/RRF、模型原文选摘验证、生成后revision复核及最多1000条不含正文的trace。兼容模型的URL/名称/Key只从服务端配置，出站需显式许可；有真实HTTP业务演示，无用户/租户鉴权，只能私有回环运行。
