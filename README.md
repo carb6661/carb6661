@@ -6,7 +6,7 @@
 
 | 项目 | 可展示能力 | 当前边界 |
 | --- | --- | --- |
-| [Compliance RAG Assistant](https://github.com/carb6661/compliance-rag-assistant) | 持久资料库、真实BGE/BM25/RRF、引用及ETag维护；0.4补令牌角色、正文前额度与取消后worker占用，227项测试；[项目复盘](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md) | 单进程共享库，无文档ACL/租户隔离/硬截止；20问仍有拒答缺口，真实生成服务尚未联调 |
+| [Compliance RAG Assistant](https://github.com/carb6661/compliance-rag-assistant) | 真实BGE/BM25/RRF、引用/条件维护；0.5补持久来源ACL、评分前授权、撤权拒答与更新重审，280项测试；[项目复盘](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md) | 单库/整文件权限，无真实IdP/租户命名空间/硬截止；检查后仍有发送窗口，20问拒答缺口及真实生成联调待补 |
 | [Archive Ingest Guard](https://github.com/carb6661/archive-ingest-guard) | ZIP接收边界、跨平台路径命名空间、观测字节预算、隔离发布与失败清理；[验证记录](https://github.com/carb6661/archive-ingest-guard/blob/main/docs/VALIDATION.md) | 纯本地小型文档包；ASCII文件名，不审核内容，不是强资源沙箱或崩溃事务 |
 | [Webhook Replay Lab](https://github.com/carb6661/webhook-replay-lab) | 原始字节HMAC认证、时间检查、持久事务幂等、并发/故障验证、78项测试；[验证记录](https://github.com/carb6661/webhook-replay-lab/blob/main/docs/VALIDATION.md) | 原创本地协议与合成计数器；非供应商兼容实现，不保证外部exactly-once |
 | [Incident Timeline Lab](https://github.com/carb6661/incident-timeline-lab) | 多源UTC规范化、校时误差区间、行级证据、45项测试；[验证记录](https://github.com/carb6661/incident-timeline-lab/blob/main/docs/VALIDATION.md) | 校时假设未自动核验；时间先后不等于因果，无原生采集或证据链认证 |

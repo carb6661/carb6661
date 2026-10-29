@@ -114,6 +114,18 @@ python -X utf8 -m doclab.race_diagnostics
 
 ## Compliance RAG Assistant：可持久更新的合规证据问答
 
+0.5直接把来源权限接入现有RAG：[来源设计/操作/升级](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/SOURCE_AUTHORIZATION.md) · [固定合成证据](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/source-access.json) · [53项来源权限回归](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_source_access.py) · [背景/问题/方案/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
+
+SQLite持久读ACL绑定ID+当前凭据，scope+ACL先于BM25语料统计、向量评分及模型材料；维护者全库，普通查询默认零候选。授权使用独立ETag及事务修订，真正修改正文/配置清空读者并要求重审，新凭据不继承旧权限。完整280项本地测试通过，实际ASGI复现同scope的两文件分别可见、生成中撤权后清空答案/引用/片段、旧标签412及正文更新重审；真实Uvicorn HTTP验证无授权→获准→正文替换后再无证据。
+
+本轮真实BGE在禁止socket/DNS下完成两块/三模式授权检查，仅1个获准候选、只引用甲组；原20问开发集指标不变，无答案仍只拒3/4。8连接修改ACL仅1提交/7冲突，独立12块schema2迁移保留来源ETag/原块/修订，故障回滚ACL列/表/标记。可展示对象授权、RAG数据流、事务/迁移与证据发布检查的结合。
+
+这是单库、完整来源文件权限；不是多租户命名空间/真实IdP/段落ACL或操作审计，维护者和本机文件管理员可信。检查后仍有发送/外传窗口，已送给服务商的材料不能撤回；selector实验是本地替身，真实生成未联调；额度仍无硬截止/持久状态。升级须停全部旧服务并私有备份，schema3默认不向普通读者整库开放。公开内容只有原创代码与合成资料。
+
+[0.5 CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/40893329824)对应9962fd2，Windows/Linux × Python3.11/3.12/3.13六组各280项通过，包含真实HTTP与来源授权/维护/额度实验，不下载BGE或调用真实LLM。发布前扫描66个公开候选文件有6处规则匹配，逐项核查为环境取值/随机生成/明确合成测试，不写成0匹配；详情见项目验证记录。
+
+以下0.4/0.3/0.2为历史能力及当时限制，当前来源权限以0.5设计为准。
+
 0.4继续深化真实业务入口：[权限/任务设计与升级](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/ACCESS_CONTROL.md) · [合成实验记录](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/access-admission.json) · [权限/取消专项测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_access.py) · [项目复盘/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
 
 默认锁定的随机令牌/摘要与reader、analyst、maintainer角色；正文读取前按身份滚动频率及全局/身份任务准入，llm单独额度。HTTP取消不终止同步worker，用双生命周期占用避免提前归还名额。Windows/Python3.12.8本地227项测试（新增60项）；真实回环401/403/200/403；实际RAG 8请求1放行/7容量拒绝，生成任务满额时另一身份本地抽取200；实际ASGI取消+AnyIO线程仍运行时保持占用，退出后归0。
