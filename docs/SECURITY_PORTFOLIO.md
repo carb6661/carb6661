@@ -114,6 +114,16 @@ python -X utf8 -m doclab.race_diagnostics
 
 ## Compliance RAG Assistant：可持久更新的合规证据问答
 
+0.6继续原主项目的外部依赖治理：[生成worker设计/配置/限制](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/GENERATION_WORKERS.md) · [固定合成实验](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/generation-worker.json) · [50项生命周期/协议测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_isolated_generation.py) · [复盘/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
+
+标准生成工厂使用固定Python -I子进程，默认45秒选摘预算，密钥走私有JSON stdin、最小环境、不用shell/pickle；监督线程独立于管道写/读。只有进程和双向I/O确认结束才释放worker容量，回收不确定保留隔离名额。Windows/Python3.12.8完整330项测试（新增50项），真实子进程/回环协议模拟服务/SQLite/FastAPI验证正常→每50ms慢流超时→下次恢复；实际不读stdin子进程和ASGI取消仍保留占用，迟到/超限/坏协议拒绝，故障注入确认隔离后不继续创建。
+
+可展示RAG依赖治理、进程/管道背压、异步与同步生命周期、资源所有权、秘密最小化及失败关闭。API传输为进程内ASGI，模型侧是实际回环HTTP模拟且只复制合成证据，**不是真实LLM或生产压测**。生成预算非全请求SLA/OS权限或内存沙箱，OS创建/回收可能增加耗时；不保证父进程崩溃后子进程自动终止，没有持久任务/费用账本；远端已收到材料和计费不能撤回。schema3、来源ACL及原20问拒答缺口未变。
+
+[0.6 CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/41588269456)对应c1e80d1，Windows/Linux × Python3.11/3.12/3.13六组各330项通过，含固定进程/回环模拟HTTP和原业务回归；不下载真实权重/调用真实LLM。72个公开候选文件扫描11处匹配均逐项确认为运行时取值/随机生成/字段引用/明确合成内容，不写成0匹配。
+
+以下0.5及更早记录为历史成果与当时限制；生成阶段预算以0.6设计为准。
+
 0.5直接把来源权限接入现有RAG：[来源设计/操作/升级](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/SOURCE_AUTHORIZATION.md) · [固定合成证据](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/source-access.json) · [53项来源权限回归](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_source_access.py) · [背景/问题/方案/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
 
 SQLite持久读ACL绑定ID+当前凭据，scope+ACL先于BM25语料统计、向量评分及模型材料；维护者全库，普通查询默认零候选。授权使用独立ETag及事务修订，真正修改正文/配置清空读者并要求重审，新凭据不继承旧权限。完整280项本地测试通过，实际ASGI复现同scope的两文件分别可见、生成中撤权后清空答案/引用/片段、旧标签412及正文更新重审；真实Uvicorn HTTP验证无授权→获准→正文替换后再无证据。
