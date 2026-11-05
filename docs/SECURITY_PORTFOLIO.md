@@ -114,6 +114,16 @@ python -X utf8 -m doclab.race_diagnostics
 
 ## Compliance RAG Assistant：可持久更新的合规证据问答
 
+0.7继续深入RAG事实支持与质量工程：[设计/运行/评分合同](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/QUALITY_EVALUATION.md) · [逐题报告](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/quote-quality.json) · [55项评分/重放/比较测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_quality_eval.py) · [背景/问题/方案/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
+
+新增4份原创合成手册/18题（10有答案/8无答案），来源清单和原文摘要绑定scope及逐项事实锚点，目标只接收AskRequest。评分分离检索、完整事实引用、语义拒答和操作故障；空引用不算引用有效，模型未配置/超时不算正确拒答。可保存本地原始观测重评分、逐题比较改进/退化，指纹/完整清单阻止换题删题后直接比较，输出不回显问题/原文/任意provider reason。
+
+完整385项本地测试（原330加55），真实512维BGE在禁止socket/DNS条件下运行Dense/Hybrid；与BM25相同，完整事实引用10/10，无答案仅拒2/8，6题仍给出有效但不充分的原文，**质量门禁失败**。基础CI验证测试/固定报告与预期非零门禁退出，不代表质量已过关；真实BGE记录来自本机，未调用真实LLM。数据由AI辅助原创，非独立人工评测，不把旧20问3/4和新18题2/8比较成效果变化。
+
+可展示AI应用安全评测、证据溯源、失败分型、可重放实验和逐题回归治理。本轮解决测量/比较失真，未改在线策略、未消除语义拒答缺口；不证明开放式语义蕴含、gold正确、远程执行真实性或ACL效果，原始观测仍须本地保密。后续先明确部分回答合同、人工复核获许可资料，再在未参与调优样本验证真实生成/结构化证据方案。以下0.6及更早为历史成果与当时限制。
+
+[0.7功能CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/41979010024)对应e9819db，Windows/Linux × Python3.11/3.12/3.13六组均385项通过、pip check及原业务演示通过，质量诊断明确FAILED及相同6题；不装BGE权重/调用真实LLM。83个拟公开文件扫描11处匹配均逐项核实为随机生成/环境读取/字段引用/明确合成测试，未把匹配数写成0。
+
 0.6继续原主项目的外部依赖治理：[生成worker设计/配置/限制](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/GENERATION_WORKERS.md) · [固定合成实验](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/generation-worker.json) · [50项生命周期/协议测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_isolated_generation.py) · [复盘/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
 
 标准生成工厂使用固定Python -I子进程，默认45秒选摘预算，密钥走私有JSON stdin、最小环境、不用shell/pickle；监督线程独立于管道写/读。只有进程和双向I/O确认结束才释放worker容量，回收不确定保留隔离名额。Windows/Python3.12.8完整330项测试（新增50项），真实子进程/回环协议模拟服务/SQLite/FastAPI验证正常→每50ms慢流超时→下次恢复；实际不读stdin子进程和ASGI取消仍保留占用，迟到/超限/坏协议拒绝，故障注入确认隔离后不继续创建。
