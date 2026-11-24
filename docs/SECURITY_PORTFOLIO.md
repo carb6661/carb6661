@@ -114,6 +114,14 @@ python -X utf8 -m doclab.race_diagnostics
 
 ## Compliance RAG Assistant：可持久更新的合规证据问答
 
+0.8继续深化资料治理：[同事务维护记录/分页/导出/升级](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/MAINTENANCE_AUDIT.md) · [固定合成证据](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/maintenance-audit.json) · [55项专项回归](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_audit.py) · [背景/问题/方案/简历](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
+
+来源创建/实际替换/删除/读ACL替换与事件同SQLite事务，API actor由认证lease注入、本地调用标local；前后摘要及读者列表保留且不复制正文/凭据。440项本地测试：四类事件插入前后故障全量回滚、并发CAS/容量、独立schema3无回填迁移/回滚、伪造actor及提交后响应失败。真实Uvicorn回环HTTP导出删除后4事件；52事件实际ASGI按50+2分页，固定上界排除后续提交，失败/超限导出不覆盖文件。
+
+可展示AppSec数据治理、事务一致性、证据生命周期和私有运维边界。真实BGE禁止socket/DNS下重跑旧开发集及来源ACL，原效果保持，未调用真实LLM。仅已提交维护，不是失败尝试日志/IdP/WORM；数据库管理员/旧写者能绕过，10,000事件上限后实际写入阻塞，无自动归档。18题6个不充分返回和质量门禁失败未修复，AI合成标注不作独立评测；未迁移用户工作区私有库。以下0.7及更早保留历史成果与当时限制。
+
+[0.8功能CI](https://github.com/carb6661/compliance-rag-assistant/actions/runs/45423348444)对应6c8f826，Windows/Linux × Python3.11/3.12/3.13六组各440项通过，pip check、新审计实验及原真实HTTP流程通过；18题质量诊断仍明确FAILED。CLI默认100条/最多100页以匹配默认120次/分钟额度；89个拟公开文件扫描11处匹配逐项核查，无真实凭据字面量，不写成0匹配。
+
 0.7继续深入RAG事实支持与质量工程：[设计/运行/评分合同](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/QUALITY_EVALUATION.md) · [逐题报告](https://github.com/carb6661/compliance-rag-assistant/blob/main/examples/evaluation/quote-quality.json) · [55项评分/重放/比较测试](https://github.com/carb6661/compliance-rag-assistant/blob/main/tests/test_quality_eval.py) · [背景/问题/方案/简历模板](https://github.com/carb6661/compliance-rag-assistant/blob/main/docs/PROJECT_STORY.md)。
 
 新增4份原创合成手册/18题（10有答案/8无答案），来源清单和原文摘要绑定scope及逐项事实锚点，目标只接收AskRequest。评分分离检索、完整事实引用、语义拒答和操作故障；空引用不算引用有效，模型未配置/超时不算正确拒答。可保存本地原始观测重评分、逐题比较改进/退化，指纹/完整清单阻止换题删题后直接比较，输出不回显问题/原文/任意provider reason。
